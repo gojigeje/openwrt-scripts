@@ -6,6 +6,9 @@ jam=$(date +%I)
 menit=$(date +%M)
 ampm=$(date +%p)
 
+if [[ $jam < 10 ]]; then
+  jam=$(echo $jam | sed 's/^[0]*//')
+fi
 if [[ $menit = "00" ]]; then
   menit="o'clock"
 fi
