@@ -1,6 +1,28 @@
 #!/bin/bash
+# ----------------------------------------------------------------------------------
+# @name    : speak.time.sh
+# @version : 0.1
+# @date    : 2014/03/19 04:29 WIB
+#
+# ABOUT
+# ----------------------------------------------------------------------------------
+# Simple script to get current time, and speak it for us.
+#
+# AUTHOR
+# ----------------------------------------------------------------------------------
+# Ghozy Arif Fajri <http://github.com/gojigeje>
+#
 
 cd /root/script/
+
+if [ -z "$1" ]
+  then
+    echo "non-quiet mode" > /dev/null
+  else
+    if [ "$1" = "-q" ]; then
+      QUIET="-q"
+    fi
+fi
 
 jam=$(date +%I)
 menit=$(date +%M)
@@ -18,5 +40,5 @@ else
   ampm="P.M."
 fi
 
-bash speak.sh "Hi Goji!. The time now, is, $jam, $menit, $ampm"
-# echo "Hi Goji!. The time now, is, $jam, $menit, $ampm"
+bash speak.sh "Hi Goji!. The time now, is, $jam, $menit, $ampm" $QUIET
+# echo "Hi Goji!. The time now, is, $jam, $menit, $ampm" $QUIET
