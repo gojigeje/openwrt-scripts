@@ -13,6 +13,7 @@
 # Ghozy Arif Fajri <http://github.com/gojigeje>
 #
 
+. /etc/profile
 cd /root/script/
 
 if [ -z "$1" ]
