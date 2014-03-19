@@ -7,17 +7,24 @@
 #
 #   I modified it to work on my OpenWRT router by piping out to madplay
 #   and add function to check internet connection state. If offline, it
-#   will simply play the "offline.mp3" file :)
+#   will simply play the "offline.mp3" file or be quiet if -q parameter is set.
  
 offmp3="/root/script/noconnection.mp3"
 
-# cek koneksi
-if eval "ping -c 1 8.8.4.4 -w 2 > /dev/null 2>&1"; then
-  echo "ok" > /dev/null
-else
-  madplay "$offmp3" -A -20 > /dev/null 2>&1
-  exit 1
-fi 
+# check internet connection
+cek_koneksi() {
+  if eval "ping -c 1 8.8.4.4 -w 2 > /dev/null 2>&1"; then
+    echo "ok" > /dev/null
+  else
+    if [ "$QUIET" = "1" ]; then
+      echo "no internet connection"
+      exit 1
+    else
+      madplay "$offmp3" -A -20 > /dev/null 2>&1
+      exit 1
+    fi
+  fi 
+}
 
 ## a function to encode urls
 rawurlencode() {
@@ -35,7 +42,17 @@ rawurlencode() {
   done
   echo "${encoded}"
 }
- 
+
+if [ -z "$2" ]
+  then
+    echo "non-quiet mode"
+  else
+    if [ "$2" = "-q" ]; then
+      QUIET="1"
+      echo "quiet"
+    fi
+fi
+
 if [ -z "$1" ]
   then
     echo "No text specified, exiting"
@@ -43,15 +60,10 @@ if [ -z "$1" ]
   else
     TEXT=$( rawurlencode "$1" )
 fi
- 
-if [ -z "$2" ]
-  then
-    # echo "No language supplied, using en"
-    LANG="en"
-  else
-    LANG="$2"
-fi
- 
+
+cek_koneksi
+
+LANG="en"
 API="http://translate.google.com/translate_tts?ie=UTF-8&tl=$LANG&q=$TEXT"
 UA="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36"
 wget -q -U "$UA" -O - "$API" | madplay - -A -20 > /dev/null 2>&1
