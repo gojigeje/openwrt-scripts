@@ -15,6 +15,7 @@
 
 . /etc/profile
 cd /root/script/
+. volume.madplay
 
 if [ -z "$1" ]
   then
@@ -32,10 +33,12 @@ curl -s -u <EMAIL>:<PASSWORD> --silent "https://mail.google.com/mail/feed/atom" 
 if [ -s "$TMPDIR/inbox" ]; then
   new=$(cat "$TMPDIR/inbox")
   if [ $new = "0" ]; then
-    echo "You have no new message"
+    #echo "You have no new message"
+    madplay mp3/speak.gmail.nonew.mp3 -A "$VOLUMEMADPLAY"
   else
     bash speak.sh "Hi Goji!. You have, $new, new email. in your gmail inbox" $QUIET
   fi
-else 
-  echo "kosong"
+else
+  #echo "kosong"
+  madplay mp3/speak.gmail.cannot.mp3 -A "$VOLUMEMADPLAY"
 fi

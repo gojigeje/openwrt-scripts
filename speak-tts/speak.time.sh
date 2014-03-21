@@ -41,4 +41,3 @@ else
 fi
 
 bash speak.sh "Hi Goji!. The time now, is, $jam, $menit, $ampm" $QUIET
-# echo "Hi Goji!. The time now, is, $jam, $menit, $ampm" $QUIET

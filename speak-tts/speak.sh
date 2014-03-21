@@ -9,7 +9,8 @@
 #   and add function to check internet connection state. If offline, it
 #   will simply play the "offline.mp3" file or be quiet if -q parameter is set.
  
-offmp3="/root/script/noconnection.mp3"
+offmp3="/root/script/mp3/noconnection.mp3"
+. /root/script/volume.madplay
 
 # check internet connection
 cek_koneksi() {
@@ -20,7 +21,7 @@ cek_koneksi() {
       echo "no internet connection"
       exit 1
     else
-      madplay "$offmp3" -A -20 > /dev/null 2>&1
+      madplay "$offmp3" -A $VOLUMEMADPLAY > /dev/null 2>&1
       exit 1
     fi
   fi 
@@ -66,4 +67,4 @@ cek_koneksi
 LANG="en"
 API="http://translate.google.com/translate_tts?ie=UTF-8&tl=$LANG&q=$TEXT"
 UA="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36"
-wget -q -U "$UA" -O - "$API" | madplay - -A -20 > /dev/null 2>&1
+wget -q -U "$UA" -O - "$API" | madplay - -A $VOLUMEMADPLAY > /dev/null 2>&1
