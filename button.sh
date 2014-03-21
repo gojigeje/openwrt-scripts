@@ -16,13 +16,25 @@
 cd /root/script
 
 case "$1" in
-  "1" )
+  "1" ) # 1s
     bash speak.time.sh
   ;;
 
-  "2" )
+  "2" ) # 3s
     bash speak.gmail.sh
   ;;
+
+  "3" ) # 5s
+    bash control.mpd.sh
+  ;;
+
+  "4" ) # 7s
+    bash control.lighty.sh
+  ;;
+
+  "5" ) # 10s
+    bash control.reboot.sh
+  ;; 
 
   *)
     echo "?"
