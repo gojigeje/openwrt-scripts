@@ -38,7 +38,7 @@ case "$1" in
   ;;
 
   "5" ) # 10s
-    bash control.reboot.sh
+    bash control.reboot.sh &
   ;; 
 
   *)
