@@ -14,10 +14,15 @@
 #
 
 cd /root/script
+filenya="reboot.pid"
 
 case "$1" in
   "1" ) # 1s
-    bash speak.time.sh
+    if [ -f "$filenya" ]; then
+      bash control.reboot0.sh
+    else
+      bash speak.time.sh
+    fi
   ;;
 
   "2" ) # 3s
