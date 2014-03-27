@@ -111,7 +111,15 @@ case "$1" in
       fi
     else
       # successfully started
-      message_started
+      if [ -z "$2" ]
+        then
+          echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer successfully started.."
+          message_started
+        else
+          if [ "$2" = "quiet" ]; then
+            echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer successfully started.. (quiet)"
+          fi
+      fi
     fi
   ;;
 
@@ -152,33 +160,48 @@ case "$1" in
     cek_running
     if [ "$smjpg" = "OFF" ]; then
       echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer is not running!"
-      exit 1
-    fi
-
-    echo "$(date +%Y-%m-%d_%H:%M:%S) - killing mjpg_streamer.."
-    killall mjpg_streamer
-    sleep 2
-    cek_running
-    if [ "$smjpg" = "ON" ]; then
-      echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (1)"
+      if [ -z "$2" ]
+        then
+          $0 start
+        else
+          if [ "$2" = "quiet" ]; then
+            $0 start quiet
+          fi
+      fi
+    else
+      echo "$(date +%Y-%m-%d_%H:%M:%S) - killing mjpg_streamer.."
       killall mjpg_streamer
+      sleep 2
       cek_running
       if [ "$smjpg" = "ON" ]; then
-        echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (2)"
+        echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (1)"
         killall mjpg_streamer
         cek_running
         if [ "$smjpg" = "ON" ]; then
-          echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (3)"
-          echo "$(date +%Y-%m-%d_%H:%M:%S) - Giving up :( -- reboot?"
-          # force reboot
-          message_not_responding
-          reboot -f
+          echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (2)"
+          killall mjpg_streamer
+          cek_running
+          if [ "$smjpg" = "ON" ]; then
+            echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (3)"
+            echo "$(date +%Y-%m-%d_%H:%M:%S) - Giving up :( -- reboot?"
+            # force reboot
+            message_not_responding
+            reboot -f
+          fi
+        fi
+      else
+        echo "$(date +%Y-%m-%d_%H:%M:%S) - killed!"
+        if [ -z "$2" ]
+          then
+            $0 start
+          else
+            if [ "$2" = "quiet" ]; then
+              $0 start quiet
+            fi
         fi
       fi
-    else
-      echo "$(date +%Y-%m-%d_%H:%M:%S) - killed!"
-      $0 start
     fi
+
   ;;
 
   *)
