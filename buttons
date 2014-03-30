@@ -1,0 +1,25 @@
+#!/bin/sh
+logger button: $BUTTON
+logger action: $ACTION
+
+set_led_blink() {
+  echo none > /sys/class/leds/tp-link\:green\:wlan/trigger
+  echo none > /sys/class/leds/tp-link\:green\:3g/trigger
+  sleep 1
+  set_led_on
+}
+
+set_led_on() {
+  echo default-on > /sys/class/leds/tp-link\:green\:wlan/trigger
+  echo default-on > /sys/class/leds/tp-link\:green\:3g/trigger
+}
+
+if [ "$BUTTON" = "wps" ]; then
+  if [ "$ACTION" = "pressed"]; then
+    set_led_blink &
+  else
+    set_led_on
+  fi
+else
+  exit 0
+fi
