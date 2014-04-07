@@ -13,7 +13,7 @@
 # Ghozy Arif Fajri <http://github.com/gojigeje>
 #
 
-WEBFOLDER="/website/arsip"
+WEBFOLDER="/website/arsip1"
 TAHUNBULAN=$(date +'%Y-%m')
 TANGGAL=$(date +'%d')
 ARSIPFOLDER="$WEBFOLDER/$TAHUNBULAN/$TANGGAL"
