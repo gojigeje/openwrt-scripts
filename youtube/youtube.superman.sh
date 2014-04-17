@@ -42,7 +42,7 @@ download() {
     echo "> Downloading: $line"
     echo -ne "\e[96m"
 
-    youtube-dl -f '18/43/5/36' -o 'get/%(title)s.%(ext)s' "$line"
+    youtube-dl -f '18/43/5/36' -o "$save_folder/%(title)s.%(ext)s" "$line"
 
     echo -ne "\e[39m"
     let num++;
