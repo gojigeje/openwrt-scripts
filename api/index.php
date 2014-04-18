@@ -22,7 +22,7 @@
   // echo "$ip_client<br>";
 
   // akses eksklusif dari 192.168.2.9 dan 192.168.2.2
-  if ($ip_client!="192.168.2.9" && $ip_client!="192.168.2.2") {
+  if ($ip_client!="192.168.2.9" && $ip_client!="192.168.2.8" && $ip_client!="192.168.2.2") {
     die("FORBIDDEN");
   } 
 
@@ -43,6 +43,10 @@
       
       case 'gojimini2.reboot_maintenance':
         exec("bash script/gojimini2.reboot_maintenance.sh > /dev/null 2>&1 &");
+      break;
+
+      case 'transmission.completed':
+        exec("bash script/transmission_completed.sh > /dev/null 2>&1 &");
       break;
 
       default:
