@@ -13,11 +13,11 @@
 # Ghozy Arif Fajri <http://github.com/gojigeje>
 #
 
-WEBFOLDER="/website/arsip1"
+WEBFOLDER="/website/cctv/arsip1"
 TAHUNBULAN=$(date +'%Y-%m')
 TANGGAL=$(date +'%d')
 ARSIPFOLDER="$WEBFOLDER/$TAHUNBULAN/$TANGGAL"
-mkdir -p "$ARSIPFOLDER"
+mkdir -p "$WEBFOLDER" "$ARSIPFOLDER"
 
 getDate() {
   DATE=$(date +'%Y%m%d-%H%M')
@@ -206,5 +206,9 @@ case "$1" in
 
   *)
     echo "Wrong parameter!"
+    echo "Use this : start | startup"
+    echo "           cek"
+    echo "           reload"
+    echo ""
   ;;
 esac
