@@ -1,8 +1,8 @@
 #!/bin/bash
 # ----------------------------------------------------------------------------------
 # @name    : control.mjpgstreamer.sh
-# @version : 0.1
-# @date    : 2014/03/24 23:06 WIB
+# @version : 0.2
+# @date    : 2014/05/25 05:33 WIB
 #
 # ABOUT
 # ----------------------------------------------------------------------------------
@@ -153,6 +153,38 @@ case "$1" in
       fi
     else
       echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer not running!"
+
+      startup
+      sleep 2
+      cek_running
+      if [ "$smjpg" = "OFF" ]; then
+        echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (1)"
+        startup
+        cek_running
+        if [ "$smjpg" = "OFF" ]; then
+          echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (2)"
+          startup
+          cek_running
+          if [ "$smjpg" = "OFF" ]; then
+            echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (3)"
+            echo "$(date +%Y-%m-%d_%H:%M:%S) - Giving up :( -- reboot?"
+            # force reboot
+            message_not_responding
+            reboot -f
+          fi
+        fi
+      else
+        # successfully started
+        if [ -z "$2" ]
+          then
+            echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer successfully started.."
+            message_started
+          else
+            if [ "$2" = "quiet" ]; then
+              echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer successfully started.. (quiet)"
+            fi
+        fi
+      fi
     fi
   ;;
 
