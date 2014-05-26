@@ -1,8 +1,8 @@
 #/bin/bash
 
 playlist="http://www.youtube.com/playlist?list=PLMf7VY8La5RFIeOyIZ5IOm68WVb7c2dyT"
-save_folder="/home/goji/Desktop"
-cache_folder="/home/goji/Desktop"
+save_folder="/home/goji/Downloads"
+cache_folder="/home/goji/Downloads/@openwrt"
 linkFile="$cache_folder/links"
 
 cekonline() {
