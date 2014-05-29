@@ -41,7 +41,7 @@ message_system_ready() {
 cek_wget() {
   cd /root/script
   getDate
-  wget -q "http://localhost/?action=stream" -O snapshot.jpg &
+  wget -q "http://localhost/?action=snapshot" -O snapshot.jpg &
   PID=$!
   sleep 10
   PSPID=$(ps | grep $PID | grep -v grep)
@@ -96,10 +96,12 @@ case "$1" in
     if [ "$smjpg" = "OFF" ]; then
       echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (1)"
       startup
+      sleep 2
       cek_running
       if [ "$smjpg" = "OFF" ]; then
         echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (2)"
         startup
+        sleep 2
         cek_running
         if [ "$smjpg" = "OFF" ]; then
           echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (3)"
@@ -160,10 +162,12 @@ case "$1" in
       if [ "$smjpg" = "OFF" ]; then
         echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (1)"
         startup
+        sleep 2
         cek_running
         if [ "$smjpg" = "OFF" ]; then
           echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (2)"
           startup
+          sleep 2
           cek_running
           if [ "$smjpg" = "OFF" ]; then
             echo "$(date +%Y-%m-%d_%H:%M:%S) - mjpg_streamer couldn't start? Starting again.. (3)"
@@ -208,10 +212,12 @@ case "$1" in
       if [ "$smjpg" = "ON" ]; then
         echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (1)"
         killall mjpg_streamer
+        sleep 2
         cek_running
         if [ "$smjpg" = "ON" ]; then
           echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (2)"
           killall mjpg_streamer
+          sleep 2
           cek_running
           if [ "$smjpg" = "ON" ]; then
             echo "$(date +%Y-%m-%d_%H:%M:%S) - can't kill mjpg_streamer! killing again (3)"
