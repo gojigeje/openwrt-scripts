@@ -28,7 +28,7 @@ fi
 
 TMPDIR="/root/script"
 # TMPDIR="$HOME/Desktop"
-curl -s -u <EMAIL>:<PASSWORD> --silent "https://mail.google.com/mail/feed/atom" | grep fullcount | sed 's/<[^>]\+>//g' > "$TMPDIR/inbox"
+curl -s -u <EMAIL>:<PASSWORD> --silent "https://mail.google.com/mail/feed/atom" | sed 's/<fullcount>/$\n<fullcount>/g;s/<\/fullcount>/<\/fullcount>\n/g' | grep fullcount | sed 's/<[^>]\+>//g' > "$TMPDIR/inbox"
 
 if [ -s "$TMPDIR/inbox" ]; then
   new=$(cat "$TMPDIR/inbox")
@@ -42,3 +42,4 @@ else
   #echo "kosong"
   madplay mp3/speak.gmail.cannot.mp3 -A "$VOLUMEMADPLAY"
 fi
+
