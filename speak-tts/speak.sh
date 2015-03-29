@@ -64,7 +64,7 @@ fi
 
 cek_koneksi
 
-LANG="en"
+LANG="id" # bahasa indonesia
 API="http://translate.google.com/translate_tts?ie=UTF-8&tl=$LANG&q=$TEXT"
 UA="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36"
 wget -q -U "$UA" -O - "$API" | madplay - -A $VOLUMEMADPLAY > /dev/null 2>&1
